@@ -6,70 +6,59 @@
   <title>Sinar Bulian Jaya Calculator</title>
   <style>
     :root {
-      --primary-color: #005f73;
-      --accent-color: #0a9396;
-      --light-bg: #f4f4f4;
-      --text-color: #333;
-      --box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+      --primary: #114b5f;
+      --secondary: #028090;
+      --light-bg: #f8f9fa;
+      --light-gray: #e9ecef;
+      --white: #ffffff;
+      --text: #333;
       --radius: 12px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--light-bg);
       margin: 0;
       padding: 20px;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--text);
       display: flex;
       justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
     }
 
     .container {
-      background-color: #fff;
-      padding: 30px 20px 20px 20px;
-      border-radius: var(--radius);
-      box-shadow: var(--box-shadow);
       width: 100%;
-      max-width: 600px;
+      max-width: 700px;
+      background-color: var(--white);
+      padding: 30px 24px;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
       position: relative;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 30px;
     }
 
     .add-section-button {
       position: absolute;
       top: 20px;
       right: 20px;
-      background-color: var(--accent-color);
-      color: white;
+      background-color: var(--secondary);
+      color: var(--white);
       border: none;
       border-radius: var(--radius);
       padding: 8px 14px;
-      cursor: pointer;
       font-weight: bold;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      transition: background-color 0.2s;
-    }
-
-    .add-section-button:hover {
-      background-color: #007f86;
-    }
-
-    h2 {
-      text-align: center;
-      color: var(--primary-color);
-      margin-bottom: 30px;
+      cursor: pointer;
     }
 
     .section {
-      margin-bottom: 25px;
+      background-color: var(--light-gray);
       padding: 20px;
-      border: 1px solid #ccc;
       border-radius: var(--radius);
-      background-color: #fafafa;
+      margin-bottom: 20px;
       position: relative;
     }
 
@@ -77,52 +66,55 @@
       position: absolute;
       top: 10px;
       right: 10px;
-      background-color: #e63946;
-      color: white;
+      background-color: #dc3545;
+      color: var(--white);
       border: none;
       border-radius: 50%;
-      width: 30px;
-      height: 30px;
+      width: 28px;
+      height: 28px;
+      font-weight: bold;
       cursor: pointer;
-      font-size: 18px;
-      line-height: 30px;
-      text-align: center;
-    }
-
-    .input-group {
-      margin-bottom: 15px;
     }
 
     label {
-      font-weight: 500;
-      color: var(--text-color);
+      font-weight: 600;
+      margin-bottom: 6px;
       display: block;
-      margin-bottom: 8px;
     }
 
     input[type="number"] {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
+      border-radius: 8px;
       border: 1px solid #ccc;
-      border-radius: var(--radius);
-      font-size: 16px;
-      background-color: white;
+      margin-bottom: 16px;
     }
 
-    .checkbox-group {
-      margin-top: 20px;
+    .section-total {
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: var(--primary);
+      text-align: right;
+    }
+
+    .subtotal {
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--primary);
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
     }
 
     .checkbox-group label {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      margin-bottom: 12px;
-      font-size: 15px;
-      color: var(--text-color);
-      background: #f0f0f0;
-      padding: 10px 12px;
+      background-color: #f1f1f1;
+      padding: 10px 14px;
+      margin-bottom: 10px;
       border-radius: var(--radius);
+      font-weight: 500;
     }
 
     .checkbox-group input[type="checkbox"] {
@@ -130,32 +122,14 @@
       transform: scale(1.2);
     }
 
-    .checkbox-group span {
-      font-weight: bold;
-      font-size: 14px;
-      color: #d00000;
-    }
-
-    .section-total {
-      font-weight: bold;
-      color: #005f73;
-      text-align: right;
-      margin-top: 10px;
-    }
-
     .total {
-      margin-top: 20px;
+      margin-top: 30px;
       text-align: center;
-      font-size: 1.5em;
+      font-size: 1.6rem;
       font-weight: bold;
-      color: var(--primary-color);
+      color: var(--primary);
       border-top: 1px solid #ccc;
-      padding-top: 15px;
-    }
-
-    #subtotal {
-      font-size: 0.9em;
-      color: #666;
+      padding-top: 20px;
     }
   </style>
 </head>
@@ -163,11 +137,10 @@
   <div class="container">
     <button class="add-section-button" onclick="addSection()">+ Add</button>
     <h2>Sinar Bulian Jaya Calculator</h2>
+
     <div id="sections-container"></div>
 
-    <div class="total">
-      Subtotal (Before Deductions): <span id="subtotal">Rp 0</span>
-    </div>
+    <div class="subtotal" id="subtotalDisplay">Subtotal: Rp 0</div>
 
     <div class="checkbox-group">
       <label><span><input type="checkbox" id="komisi"> Komisi (1%)</span> <span id="komisiAmount"></span></label>
@@ -175,9 +148,7 @@
       <label><span><input type="checkbox" id="materai"> Materai (Rp 6000)</span> <span id="materaiAmount"></span></label>
     </div>
 
-    <div class="total">
-      Grand Total: <span id="total">Rp 0</span>
-    </div>
+    <div class="total">Grand Total: <span id="total">Rp 0</span></div>
   </div>
 
   <script>
@@ -188,17 +159,22 @@
     const komisiAmount = document.getElementById("komisiAmount");
     const buruhAmount = document.getElementById("buruhAmount");
     const materaiAmount = document.getElementById("materaiAmount");
-    const subtotalDisplay = document.getElementById("subtotal");
     const totalDisplay = document.getElementById("total");
+    const subtotalDisplay = document.getElementById("subtotalDisplay");
     const sectionsContainer = document.getElementById("sections-container");
 
     komisi.addEventListener("change", calculateTotal);
     buruh.addEventListener("change", calculateTotal);
     materai.addEventListener("change", calculateTotal);
 
-    function roundToNearestThousand(value) {
-      const remainder = value % 1000;
-      return remainder >= 500 ? value + (1000 - remainder) : value - remainder;
+    function roundTotal(value) {
+      const last3 = value % 1000;
+      return last3 >= 998 ? value + (1000 - last3) : value - last3;
+    }
+
+    function roundKomisiBuruh(value) {
+      const last3 = value % 1000;
+      return last3 >= 2 ? value + (1000 - last3) : value - last3;
     }
 
     function addSection() {
@@ -207,20 +183,17 @@
 
       section.innerHTML = `
         <button class="remove-button" onclick="this.parentElement.remove(); calculateTotal();">&minus;</button>
-        <div class="input-group">
-          <label>Weight (kg)</label>
-          <input type="number" class="weight" placeholder="Enter weight in kg">
-        </div>
-        <div class="input-group">
-          <label>Price (Rp)</label>
-          <input type="number" class="price" placeholder="Enter price per kg">
-        </div>
+        <label>Weight (kg)</label>
+        <input type="number" class="weight" placeholder="Enter weight in kg">
+        <label>Price (Rp)</label>
+        <input type="number" class="price" placeholder="Enter price per kg">
         <div class="section-total">Total: <span class="section-total-value">Rp 0</span></div>
       `;
 
       section.querySelectorAll("input").forEach(input => {
         input.addEventListener("input", calculateTotal);
       });
+
       sectionsContainer.appendChild(section);
       calculateTotal();
     }
@@ -233,20 +206,19 @@
       sections.forEach(section => {
         const weight = parseFloat(section.querySelector(".weight").value) || 0;
         const price = parseFloat(section.querySelector(".price").value) || 0;
-        let sectionTotal = weight * price;
-        sectionTotal = roundToNearestThousand(sectionTotal);
-        subtotal += sectionTotal;
+        let sectionTotal = roundTotal(weight * price);
         totalWeight += weight;
+        subtotal += sectionTotal;
 
         const sectionTotalValue = section.querySelector(".section-total-value");
         sectionTotalValue.textContent = `Rp ${sectionTotal.toLocaleString()}`;
       });
 
       let total = subtotal;
-      subtotalDisplay.textContent = `Rp ${subtotal.toLocaleString()}`;
+      subtotalDisplay.textContent = `Subtotal: Rp ${subtotal.toLocaleString()}`;
 
       if (komisi.checked) {
-        let komisiVal = roundToNearestThousand(subtotal * 0.01);
+        const komisiVal = roundKomisiBuruh(subtotal * 0.01);
         total -= komisiVal;
         komisiAmount.textContent = `- Rp ${komisiVal.toLocaleString()}`;
       } else {
@@ -254,7 +226,7 @@
       }
 
       if (buruh.checked) {
-        let buruhVal = roundToNearestThousand(35 * totalWeight);
+        const buruhVal = roundKomisiBuruh(totalWeight * 35);
         total -= buruhVal;
         buruhAmount.textContent = `- Rp ${buruhVal.toLocaleString()}`;
       } else {
@@ -268,11 +240,11 @@
         materaiAmount.textContent = "";
       }
 
-      total = roundToNearestThousand(total);
+      total = roundTotal(total);
       totalDisplay.textContent = `Rp ${total.toLocaleString()}`;
     }
 
-    // Initial section
+    // Start with one section
     addSection();
   </script>
 </body>
