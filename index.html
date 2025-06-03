@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sinar Bulian Jaya Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --primary: #0ea5e9;
+      --bg: #f0f4f8;
+      --card: #fff;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #d1d5db;
+      --danger: #ef4444;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 24px 16px;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: var(--card);
+      max-width: 480px;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    label {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 1.1rem;
+      border: 1.8px solid var(--border);
+      border-radius: 12px;
+      background: #fafafa;
+      transition: border-color 0.3s ease;
+    }
+    input[type="number"]:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #fff;
+    }
+    .checkbox-group {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+      user-select: none;
+      cursor: pointer;
+    }
+    input[type="checkbox"] {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      accent-color: var(--primary);
+    }
+    .deduction {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--danger);
+      min-width: 90px;
+      text-align: right;
+      user-select: none;
+      transition: opacity 0.3s ease;
+    }
+    .deduction.hidden {
+      opacity: 0;
+      visibility: hidden;
+      width: 0;
+      margin-left: 0;
+    }
+    .total-box {
+      margin-top: 16px;
+      background: var(--primary);
+      color: #fff;
+      padding: 18px 24px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 1.5rem;
+      text-align: center;
+      letter-spacing: 0.03em;
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+      user-select: none;
+    }
+    @media (max-width: 480px) {
+      .container {
+        padding: 24px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main" aria-label="Sinar Bulian Jaya Rubber Calculator">
+    <h1>Sinar Bulian Jaya Calculator</h1>
+
+    <div>
+      <label for="weight">Weight (kg)</label>
+      <input
+        type="number"
+        id="weight"
+        placeholder="e.g. 500"
+        min="0"
+        step="0.01"
+        inputmode="decimal"
+        aria-describedby="weight-desc"
+      />
+      <small id="weight-desc" style="color: var(--muted); font-size: 0.85rem;">
+        Enter weight in kilograms
+      </small>
+    </div>
+
+    <div>
+      <label for="price">Price (Rp per kg)</label>
+      <input
+        type="number"
+        id="price"
+        placeholder="e.g. 13000"
+        min="0"
+        step="1"
+        inputmode="numeric"
+        aria-describedby="price-desc"
+      />
+      <small id="price-desc" style="color: var(--muted); font-size: 0.85rem;">
+        Enter price in Indonesian Rupiah
+      </small>
+    </div>
+
+    <div class="checkbox-group" role="group" aria-label="Deductions">
+      <label class="checkbox-label" for="komisi">
+        <input type="checkbox" id="komisi" />
+        Komisi (1%)
+        <span class="deduction hidden" id="komisi-amount">- Rp 0</span>
+      </label>
+      <label class="checkbox-label" for="buruh">
+        <input type="checkbox" id="buruh" />
+        Buruh (Rp 35/kg)
+        <span class="deduction hidden" id="buruh-amount">- Rp 0</span>
+      </label>
+      <label class="checkbox-label" for="materai">
+        <input type="checkbox" id="materai" />
+        Materai (Rp 6.000)
+        <span class="deduction hidden" id="materai-amount">- Rp 6.000</span>
+      </label>
+    </div>
+
+    <div class="total-box" aria-live="polite" aria-atomic="true" aria-relevant="text">
+      Total: <span id="total">Rp 0</span>
+    </div>
+  </div>
+
+  <script>
+    const weightInput = document.getElementById('weight');
+    const priceInput = document.getElementById('price');
+    const komisiCheckbox = document.getElementById('komisi');
+    const buruhCheckbox = document.getElementById('buruh');
+    const materaiCheckbox = document.getElementById('materai');
+
+    const komisiAmount = document.getElementById('komisi-amount');
+    const buruhAmount = document.getElementById('buruh-amount');
+    const materaiAmount = document.getElementById('materai-amount');
+    const totalDisplay = document.getElementById('total');
+
+    function formatRupiah(num) {
+      return 'Rp ' + num.toLocaleString('id-ID');
+    }
+
+    function calculateTotal() {
+      const weight = parseFloat(weightInput.value) || 0;
+      const price = parseFloat(priceInput.value) || 0;
+
+      let total = weight * price;
+
+      // Komisi deduction
+      let komisiDeduction = 0;
+      if (komisiCheckbox.checked) {
+        komisiDeduction = total * 0.01;
+        total -= komisiDeduction;
+        komisiAmount.textContent = `- ${formatRupiah(Math.round(komisiDeduction))}`;
+        komisiAmount.classList.remove('hidden');
+      } else {
+        komisiAmount.classList.add('hidden');
+      }
+
+      // Buruh deduction
+      let buruhDeduction = 0;
+      if (buruhCheckbox.checked) {
+        buruhDeduction = 35 * weight;
+        total -= buruhDeduction;
+        buruhAmount.textContent = `- ${formatRupiah(Math.round(buruhDeduction))}`;
+        buruhAmount.classList.remove('hidden');
+      } else {
+        buruhAmount.classList.add('hidden');
+      }
+
+      // Materai deduction
+      let materaiDeduction = 6000;
+      if (materaiCheckbox.checked) {
+        total -= materaiDeduction;
+        materaiAmount.textContent = `- ${formatRupiah(materaiDeduction)}`;
+        materaiAmount.classList.remove('hidden');
+      } else {
+        materaiAmount.classList.add('hidden');
+      }
+
+      total = Math.max(total, 0);
+      totalDisplay.textContent = formatRupiah(Math.round(total));
+    }
+
+    // Attach event listeners
+    [
+      weightInput,
+      priceInput,
+      komisiCheckbox,
+      buruhCheckbox,
+      materaiCheckbox
+    ].forEach(el => {
+      el.addEventListener('input', calculateTotal);
+      el.addEventListener('change', calculateTotal);
+    });
+
+    // Initial calculation
+    calculateTotal();
+  </script>
+</body>
+</html>
