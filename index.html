@@ -1,7 +1,8 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sinar Bulian Jaya Calculator</title>
   <style>
     :root {
@@ -11,154 +12,175 @@
       --text-color: #333;
       --box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
       --radius: 12px;
-    }* {
-  box-sizing: border-box;
-}
+    }
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--light-bg);
-  margin: 0;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-.container {
-  background-color: #fff;
-  padding: 30px 20px 20px 20px;
-  border-radius: var(--radius);
-  box-shadow: var(--box-shadow);
-  width: 100%;
-  max-width: 600px;
-  position: relative;
-}
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light-bg);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
 
-.add-section-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--accent-color);
-  color: white;
-  border: none;
-  border-radius: var(--radius);
-  padding: 8px 14px;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: background-color 0.2s;
-}
+    .container {
+      background-color: #fff;
+      padding: 30px 20px 20px 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--box-shadow);
+      width: 100%;
+      max-width: 600px;
+      position: relative;
+    }
 
-.add-section-button:hover {
-  background-color: #007f86;
-}
+    .add-section-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      padding: 8px 14px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: background-color 0.2s;
+    }
 
-h2 {
-  text-align: center;
-  color: var(--primary-color);
-  margin-bottom: 30px;
-}
+    .add-section-button:hover {
+      background-color: #007f86;
+    }
 
-.section {
-  margin-bottom: 25px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: var(--radius);
-  background-color: #fafafa;
-  position: relative;
-}
+    h2 {
+      text-align: center;
+      color: var(--primary-color);
+      margin-bottom: 30px;
+    }
 
-.remove-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #e63946;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  font-size: 18px;
-  line-height: 30px;
-  text-align: center;
-}
+    .section {
+      margin-bottom: 25px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: var(--radius);
+      background-color: #fafafa;
+      position: relative;
+    }
 
-.input-group {
-  margin-bottom: 15px;
-}
+    .remove-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #e63946;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 30px;
+      text-align: center;
+    }
 
-label {
-  font-weight: 500;
-  color: var(--text-color);
-  display: block;
-  margin-bottom: 8px;
-}
+    .input-group {
+      margin-bottom: 15px;
+    }
 
-input[type="number"] {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: var(--radius);
-  font-size: 16px;
-  background-color: white;
-}
+    label {
+      font-weight: 500;
+      color: var(--text-color);
+      display: block;
+      margin-bottom: 8px;
+    }
 
-.checkbox-group {
-  margin-top: 20px;
-}
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: var(--radius);
+      font-size: 16px;
+      background-color: white;
+    }
 
-.checkbox-group label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-  font-size: 15px;
-  color: var(--text-color);
-  background: #f0f0f0;
-  padding: 10px 12px;
-  border-radius: var(--radius);
-}
+    .checkbox-group {
+      margin-top: 20px;
+    }
 
-.checkbox-group input[type="checkbox"] {
-  margin-right: 10px;
-  transform: scale(1.2);
-}
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 15px;
+      color: var(--text-color);
+      background: #f0f0f0;
+      padding: 10px 12px;
+      border-radius: var(--radius);
+    }
 
-.checkbox-group span {
-  font-weight: bold;
-  font-size: 14px;
-  color: #d00000;
-}
+    .checkbox-group input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+    }
 
-.total {
-  margin-top: 30px;
-  text-align: center;
-  font-size: 1.5em;
-  font-weight: bold;
-  color: var(--primary-color);
-  border-top: 1px solid #ccc;
-  padding-top: 15px;
-}
+    .checkbox-group span {
+      font-weight: bold;
+      font-size: 14px;
+      color: #d00000;
+    }
 
+    .section-total {
+      font-weight: bold;
+      color: #005f73;
+      text-align: right;
+      margin-top: 10px;
+    }
+
+    .total {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: var(--primary-color);
+      border-top: 1px solid #ccc;
+      padding-top: 15px;
+    }
+
+    #subtotal {
+      font-size: 0.9em;
+      color: #666;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <button class="add-section-button" onclick="addSection()">+ Add</button>
     <h2>Sinar Bulian Jaya Calculator</h2>
-    <div id="sections-container"></div><div class="checkbox-group">
-  <label><span><input type="checkbox" id="komisi"> Komisi (1%)</span> <span id="komisiAmount"></span></label>
-  <label><span><input type="checkbox" id="buruh"> Buruh (Rp 35/kg)</span> <span id="buruhAmount"></span></label>
-  <label><span><input type="checkbox" id="materai"> Materai (Rp 6000)</span> <span id="materaiAmount"></span></label>
-</div>
-<div class="total">
-  Total: <span id="total">Rp 0</span>
-</div>
+    <div id="sections-container"></div>
 
-  </div>  <script>
+    <div class="total">
+      Subtotal (Before Deductions): <span id="subtotal">Rp 0</span>
+    </div>
+
+    <div class="checkbox-group">
+      <label><span><input type="checkbox" id="komisi"> Komisi (1%)</span> <span id="komisiAmount"></span></label>
+      <label><span><input type="checkbox" id="buruh"> Buruh (Rp 35/kg)</span> <span id="buruhAmount"></span></label>
+      <label><span><input type="checkbox" id="materai"> Materai (Rp 6000)</span> <span id="materaiAmount"></span></label>
+    </div>
+
+    <div class="total">
+      Grand Total: <span id="total">Rp 0</span>
+    </div>
+  </div>
+
+  <script>
     const komisi = document.getElementById("komisi");
     const buruh = document.getElementById("buruh");
     const materai = document.getElementById("materai");
@@ -166,12 +188,18 @@ input[type="number"] {
     const komisiAmount = document.getElementById("komisiAmount");
     const buruhAmount = document.getElementById("buruhAmount");
     const materaiAmount = document.getElementById("materaiAmount");
+    const subtotalDisplay = document.getElementById("subtotal");
     const totalDisplay = document.getElementById("total");
     const sectionsContainer = document.getElementById("sections-container");
 
     komisi.addEventListener("change", calculateTotal);
     buruh.addEventListener("change", calculateTotal);
     materai.addEventListener("change", calculateTotal);
+
+    function roundToNearestThousand(value) {
+      const remainder = value % 1000;
+      return remainder >= 500 ? value + (1000 - remainder) : value - remainder;
+    }
 
     function addSection() {
       const section = document.createElement("div");
@@ -187,6 +215,7 @@ input[type="number"] {
           <label>Price (Rp)</label>
           <input type="number" class="price" placeholder="Enter price per kg">
         </div>
+        <div class="section-total">Total: <span class="section-total-value">Rp 0</span></div>
       `;
 
       section.querySelectorAll("input").forEach(input => {
@@ -197,18 +226,27 @@ input[type="number"] {
     }
 
     function calculateTotal() {
-      let total = 0;
+      let subtotal = 0;
       let totalWeight = 0;
       const sections = sectionsContainer.querySelectorAll(".section");
+
       sections.forEach(section => {
         const weight = parseFloat(section.querySelector(".weight").value) || 0;
         const price = parseFloat(section.querySelector(".price").value) || 0;
-        total += weight * price;
+        let sectionTotal = weight * price;
+        sectionTotal = roundToNearestThousand(sectionTotal);
+        subtotal += sectionTotal;
         totalWeight += weight;
+
+        const sectionTotalValue = section.querySelector(".section-total-value");
+        sectionTotalValue.textContent = `Rp ${sectionTotal.toLocaleString()}`;
       });
 
+      let total = subtotal;
+      subtotalDisplay.textContent = `Rp ${subtotal.toLocaleString()}`;
+
       if (komisi.checked) {
-        const komisiVal = total * 0.01;
+        let komisiVal = roundToNearestThousand(subtotal * 0.01);
         total -= komisiVal;
         komisiAmount.textContent = `- Rp ${komisiVal.toLocaleString()}`;
       } else {
@@ -216,7 +254,7 @@ input[type="number"] {
       }
 
       if (buruh.checked) {
-        const buruhVal = 35 * totalWeight;
+        let buruhVal = roundToNearestThousand(35 * totalWeight);
         total -= buruhVal;
         buruhAmount.textContent = `- Rp ${buruhVal.toLocaleString()}`;
       } else {
@@ -230,10 +268,12 @@ input[type="number"] {
         materaiAmount.textContent = "";
       }
 
+      total = roundToNearestThousand(total);
       totalDisplay.textContent = `Rp ${total.toLocaleString()}`;
     }
 
     // Initial section
     addSection();
-  </script></body>
+  </script>
+</body>
 </html>
