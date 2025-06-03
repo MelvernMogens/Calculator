@@ -67,6 +67,23 @@ h2 {
   border: 1px solid #ccc;
   border-radius: var(--radius);
   background-color: #fafafa;
+  position: relative;
+}
+
+.remove-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #e63946;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 30px;
+  text-align: center;
 }
 
 .input-group {
@@ -159,7 +176,9 @@ input[type="number"] {
     function addSection() {
       const section = document.createElement("div");
       section.className = "section";
+
       section.innerHTML = `
+        <button class="remove-button" onclick="this.parentElement.remove(); calculateTotal();">&minus;</button>
         <div class="input-group">
           <label>Weight (kg)</label>
           <input type="number" class="weight" placeholder="Enter weight in kg">
@@ -169,6 +188,245 @@ input[type="number"] {
           <input type="number" class="price" placeholder="Enter price per kg">
         </div>
       `;
+
+      section.querySelectorAll("input").forEach(input => {
+        input.addEventListener("input", calculateTotal);
+      });
+      sectionsContainer.appendChild(section);
+      calculateTotal();
+    }
+
+    function calculateTotal() {
+      let total = 0;
+      let totalWeight = 0;
+      const sections = sectionsContainer.querySelectorAll(".section");
+      sections.forEach(section => {
+        const weight = parseFloat(section.querySelector(".weight").value) || 0;
+        const price = parseFloat(section.querySelector(".price").value) || 0;
+        total += weight * price;
+        totalWeight += weight;
+      });
+
+      if (komisi.checked) {
+        const komisiVal = total * 0.01;
+        total -= komisiVal;
+        komisiAmount.textContent = `- Rp ${komisiVal.toLocaleString()}`;
+      } else {
+        komisiAmount.textContent = "";
+      }
+
+      if (buruh.checked) {
+        const buruhVal = 35 * totalWeight;
+        total -= buruhVal;
+        buruhAmount.textContent = `- Rp ${buruhVal.toLocaleString()}`;
+      } else {
+        buruhAmount.textContent = "";
+      }
+
+      if (materai.checked) {
+        total -= 6000;
+        materaiAmount.textContent = "- Rp 6.000";
+      } else {
+        materaiAmount.textContent = "";
+      }
+
+      totalDisplay.textContent = `Rp ${total.toLocaleString()}`;
+    }
+
+    // Initial section
+    addSection();
+  </script></body>
+</html><!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sinar Bulian Jaya Calculator</title>
+  <style>
+    :root {
+      --primary-color: #005f73;
+      --accent-color: #0a9396;
+      --light-bg: #f4f4f4;
+      --text-color: #333;
+      --box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+      --radius: 12px;
+    }* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--light-bg);
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+.container {
+  background-color: #fff;
+  padding: 30px 20px 20px 20px;
+  border-radius: var(--radius);
+  box-shadow: var(--box-shadow);
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+}
+
+.add-section-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  padding: 8px 14px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.2s;
+}
+
+.add-section-button:hover {
+  background-color: #007f86;
+}
+
+h2 {
+  text-align: center;
+  color: var(--primary-color);
+  margin-bottom: 30px;
+}
+
+.section {
+  margin-bottom: 25px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: var(--radius);
+  background-color: #fafafa;
+  position: relative;
+}
+
+.remove-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #e63946;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 30px;
+  text-align: center;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: 500;
+  color: var(--text-color);
+  display: block;
+  margin-bottom: 8px;
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: var(--radius);
+  font-size: 16px;
+  background-color: white;
+}
+
+.checkbox-group {
+  margin-top: 20px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 15px;
+  color: var(--text-color);
+  background: #f0f0f0;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-right: 10px;
+  transform: scale(1.2);
+}
+
+.checkbox-group span {
+  font-weight: bold;
+  font-size: 14px;
+  color: #d00000;
+}
+
+.total {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--primary-color);
+  border-top: 1px solid #ccc;
+  padding-top: 15px;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="add-section-button" onclick="addSection()">+ Add</button>
+    <h2>Sinar Bulian Jaya Calculator</h2>
+    <div id="sections-container"></div><div class="checkbox-group">
+  <label><span><input type="checkbox" id="komisi"> Komisi (1%)</span> <span id="komisiAmount"></span></label>
+  <label><span><input type="checkbox" id="buruh"> Buruh (Rp 35/kg)</span> <span id="buruhAmount"></span></label>
+  <label><span><input type="checkbox" id="materai"> Materai (Rp 6000)</span> <span id="materaiAmount"></span></label>
+</div>
+<div class="total">
+  Total: <span id="total">Rp 0</span>
+</div>
+
+  </div>  <script>
+    const komisi = document.getElementById("komisi");
+    const buruh = document.getElementById("buruh");
+    const materai = document.getElementById("materai");
+
+    const komisiAmount = document.getElementById("komisiAmount");
+    const buruhAmount = document.getElementById("buruhAmount");
+    const materaiAmount = document.getElementById("materaiAmount");
+    const totalDisplay = document.getElementById("total");
+    const sectionsContainer = document.getElementById("sections-container");
+
+    komisi.addEventListener("change", calculateTotal);
+    buruh.addEventListener("change", calculateTotal);
+    materai.addEventListener("change", calculateTotal);
+
+    function addSection() {
+      const section = document.createElement("div");
+      section.className = "section";
+
+      section.innerHTML = `
+        <button class="remove-button" onclick="this.parentElement.remove(); calculateTotal();">&minus;</button>
+        <div class="input-group">
+          <label>Weight (kg)</label>
+          <input type="number" class="weight" placeholder="Enter weight in kg">
+        </div>
+        <div class="input-group">
+          <label>Price (Rp)</label>
+          <input type="number" class="price" placeholder="Enter price per kg">
+        </div>
+      `;
+
       section.querySelectorAll("input").forEach(input => {
         input.addEventListener("input", calculateTotal);
       });
